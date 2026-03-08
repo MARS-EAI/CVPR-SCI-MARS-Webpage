@@ -12,8 +12,8 @@
             --card-bg: rgba(22, 27, 34, 0.95);
             --accent-cyan: #58a6ff;
             --accent-teal: #3fb950;
-            --text-primary: #e6edf3;
-            --text-secondary: #8b949e;
+            --text-primary: #ffffff;
+            --text-secondary: #c9d1d9;
             --border-color: rgba(88, 166, 255, 0.2);
             --gradient-accent: linear-gradient(135deg, #58a6ff 0%, #3fb950 100%);
         }
@@ -98,19 +98,32 @@
         }
 
         header {
+            position: relative;
             text-align: center;
             margin-bottom: 0;
             padding: 60px 40px;
-            background-image: linear-gradient(rgba(13, 17, 23, 0.75), rgba(13, 17, 23, 0.9)), url('bg-photo.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            background: url('assets/bg-photo.png') center/cover no-repeat;
             border-radius: 16px;
+            overflow: hidden;
             max-width: 1100px;
             margin-left: auto;
             margin-right: auto;
-            border: 1px solid var(--border-color);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.65);
+            z-index: 1;
+        }
+        header .logo-container,
+        header h1 {
+            position: relative;
+            z-index: 2;
         }
 
         .logo-container {
@@ -125,6 +138,7 @@
         .logo-container:hover {
             text-decoration: none;
             transform: scale(1.02);
+            opacity: 1;
         }
 
         .logo {
@@ -210,12 +224,6 @@
             background: var(--card-bg);
             border-radius: 12px;
             border: 1px solid var(--border-color);
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .section:hover {
-            border-color: rgba(88, 166, 255, 0.4);
-            box-shadow: 0 4px 20px rgba(88, 166, 255, 0.08);
         }
 
         .people-grid {
@@ -254,7 +262,6 @@
             font-weight: 600;
             font-family: 'Source Sans Pro', sans-serif;
             overflow: hidden;
-            border: 3px solid rgba(88, 166, 255, 0.3);
         }
 
         .person-photo img {
@@ -279,8 +286,11 @@
 
         /* Navigation */
         nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             margin: 40px 0;
-            padding: 18px 25px;
+            padding: 14px 25px;
             background: var(--card-bg);
             border-radius: 50px;
             border: 1px solid var(--border-color);
@@ -289,6 +299,7 @@
         .nav-links {
             display: flex;
             justify-content: center;
+            align-items: center;
             flex-wrap: wrap;
             gap: 8px;
             list-style: none;
@@ -296,11 +307,20 @@
             padding: 0;
         }
 
+        .nav-links li {
+            margin: 0;
+            padding: 0;
+        }
+
         .nav-links a {
-            color: var(--text-secondary);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #c9d1d9;
             text-decoration: none;
             font-weight: 500;
             font-size: 0.95em;
+            line-height: 1;
             padding: 8px 18px;
             border-radius: 20px;
             transition: all 0.25s ease;
@@ -343,6 +363,24 @@
             color: var(--accent-cyan);
         }
 
+        .submission-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 24px;
+            background: var(--accent-cyan);
+            color: var(--primary-bg);
+            font-weight: 600;
+            font-size: 1em;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+        .submission-btn:hover {
+            transform: translateY(-2px);
+            background: #79b8ff;
+            opacity: 1;
+        }
+
         /* Links */
         a {
             color: var(--accent-cyan);
@@ -353,17 +391,6 @@
 
         a:hover {
             opacity: 0.8;
-        }
-
-        /* Scroll Progress Bar */
-        .scroll-progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 3px;
-            background: var(--gradient-accent);
-            z-index: 10000;
         }
 
         /* Responsive */
@@ -421,12 +448,10 @@
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
     <div class="orb orb-3"></div>
-    <div class="scroll-progress" id="scrollProgress"></div>
-
     <div class="container">
         <header>
             <a href="https://mars-eai.github.io/MARS-System/" class="logo-container">
-                <img src="logo.png" alt="Workshop Logo" class="logo">
+                <img src="assets/logo.png" alt="Workshop Logo" class="logo">
                 <span class="logo-text">MARS-EAI</span>
             </a>
             <h1>CVPR 2026 1st Workshop on Multi-Agent Robotic Systems:<br>Scaling with Compositional Intelligence</h1>
@@ -454,18 +479,24 @@
 
         <section id="call-for-papers" class="section">
             <h2>Call For Papers</h2>
-            <p>We welcome submissions in the following areas:</p>
+            <p>Our workshop is <strong>Non-Proceedings</strong>—a <strong>flexible, non-archival</strong> venue for sharing a broad range of contributions without restrictive publishing constraints, formatting requirements, or page limits. We warmly welcome full papers, works-in-progress, datasets, technical reports, and position papers.</p>
+            <p><strong>Topics of interest include:</strong></p>
             <ul>
-                <li>Robotic coordination in navigation, manipulation, and assembly using foundation model reasoning.</li>
-                <li>Coordinating diverse embodiments and bridging simulation with real-world deployment.</li>
-                <li>Scalable task decomposition and multi-agent collaboration via logic-driven planning.</li>
-                <li>Hierarchical reasoning, decentralized control, and cerebrum–cerebellum paradigms.</li>
-                <li>Scalable environments and datasets for diverse multi-agent physical interactions.</li>
-                <li>Robustness, trustworthiness, generalization, scalability, and collaboration efficiency.</li>
-                <li>Reinforcement learning, imitation learning approaches for multi-agent coordination.</li>
-                <li>Human–Agent Communication: collaboration protocols, and inter-agent alignment.</li>
-                <li>Use cases in embodied robotics, multi-agent autonomy, open-world exploration, assistive systems, medical robotics, and beyond.</li>
+                <li>Robotic coordination using foundation model reasoning</li>
+                <li>Coordinating diverse embodiments and bridging simulation with real-world deployment</li>
+                <li>Scalable task decomposition and multi-agent collaboration</li>
+                <li>Hierarchical reasoning, decentralized control, and cerebrum–cerebellum paradigms</li>
+                <li>Scalable environments and datasets for multi-agent physical interactions</li>
+                <li>Robustness, trustworthiness, generalization, and collaboration efficiency</li>
+                <li>RL and imitation learning for multi-agent coordination</li>
+                <li>Human–agent communication and inter-agent alignment</li>
+                <li>Applications in embodied robotics, open-world exploration, assistive systems, medical robotics, and beyond</li>
             </ul>
+            <p><strong>Important Dates</strong></p>
+            <p>Submission Deadline: <strong>April 20, 2026</strong> (AoE)</p>
+            <p>Notification to Authors: <strong>May 10, 2026</strong></p>
+            <p>Camera-Ready Deadline: <strong>May 20, 2026</strong></p>
+            <a href="https://openreview.net/group?id=thecvf.com/CVPR/2026/Workshop/MARS_Non-proceeding_Track" class="submission-btn" target="_blank">Submit Paper</a>
         </section>
         
         <section id="schedule" class="section">
@@ -522,28 +553,28 @@
             <div class="people-grid">
                 <div class="person-card">
                     <div class="person-photo">
-                        <img src="DhruvShah24.jpeg" alt="Dhruv Shah">
+                        <img src="assets/DhruvShah24.jpeg" alt="Dhruv Shah">
                     </div>
                     <div class="person-name">Dhruv Shah</div>
                     <div class="person-institute">Google DeepMind</div>
                 </div>
                 <div class="person-card">
                     <div class="person-photo">
-                        <img src="XihuiLiu-photo.jpeg" alt="Xihui Liu">
+                        <img src="assets/XihuiLiu-photo.jpeg" alt="Xihui Liu">
                     </div>
                     <div class="person-name">Xihui Liu</div>
                     <div class="person-institute">The University of Hong Kong</div>
                 </div>
                 <div class="person-card">
                     <div class="person-photo">
-                        <img src="shanghang.jpeg" alt="Shanghang Zhang">
+                        <img src="assets/shanghang.jpeg" alt="Shanghang Zhang">
                     </div>
                     <div class="person-name">Shanghang Zhang</div>
                     <div class="person-institute">Peking University</div>
                 </div>
                 <div class="person-card">
                     <div class="person-photo">
-                        <img src="wenlong.jpg" alt="Wenlong Huang">
+                        <img src="assets/wenlong.jpg" alt="Wenlong Huang">
                     </div>
                     <div class="person-name">Wenlong Huang</div>
                     <div class="person-institute">Stanford University</div>
@@ -556,49 +587,49 @@
             <div class="people-grid">
                 <div class="person-card">
                     <div class="person-photo">
-                        <img src="yirnaqin_photo.jpg" alt="Yiran Qin">
+                        <img src="assets/yirnaqin_photo.jpg" alt="Yiran Qin">
                     </div>
                     <div class="person-name">Yiran Qin</div>
                     <div class="person-institute">The Chinese University of Hong Kong, Shenzhen</div>
                 </div>
                 <div class="person-card">
                     <div class="person-photo">
-                        <img src="zhenfei_profile.jpg" alt="Zhenfei Yin">
+                        <img src="assets/zhenfei_profile.jpg" alt="Zhenfei Yin">
                     </div>
                     <div class="person-name">Zhenfei Yin</div>
                     <div class="person-institute">University of Oxford</div>
                 </div>
                 <div class="person-card">
                     <div class="person-photo">
-                        <img src="yilun.jpeg" alt="Yilun Du">
+                        <img src="assets/yilun.jpeg" alt="Yilun Du">
                     </div>
                     <div class="person-name">Yilun Du</div>
                     <div class="person-institute">Harvard University</div>
                 </div>
                 <div class="person-card">
                     <div class="person-photo">
-                        <img src="jiayuan.jpg" alt="Jiayuan Mao">
+                        <img src="assets/jiayuan.jpg" alt="Jiayuan Mao">
                     </div>
                     <div class="person-name">Jiayuan Mao</div>
                     <div class="person-institute">Massachusetts Institute of Technology</div>
                 </div>
                 <div class="person-card">
                     <div class="person-photo">
-                        <img src="mahi_profile_comp_small.jpg" alt="Mahi Shafiullah">
+                        <img src="assets/mahi_profile_comp_small.jpg" alt="Mahi Shafiullah">
                     </div>
                     <div class="person-name">Nur Muhammad "Mahi" Shafiullah</div>
                     <div class="person-institute">New York University</div>
                 </div>
                 <div class="person-card">
                     <div class="person-photo">
-                        <img src="fangchen.jpeg" alt="Fangchen Liu">
+                        <img src="assets/fangchen.jpeg" alt="Fangchen Liu">
                     </div>
                     <div class="person-name">Fangchen Liu</div>
                     <div class="person-institute">University of California, Berkeley</div>
                 </div>
                 <div class="person-card">
                     <div class="person-photo">
-                        <img src="likang.jpeg" alt="Li Kang">
+                        <img src="assets/likang.jpeg" alt="Li Kang">
                     </div>
                     <div class="person-name">Li Kang</div>
                     <div class="person-institute">Shanghai Jiao Tong University</div>
@@ -609,35 +640,35 @@
             <div class="people-grid">
                 <div class="person-card">
                     <div class="person-photo">
-                        <img src="Tenenbaum.jpeg" alt="Josh Tenenbaum">
+                        <img src="assets/Tenenbaum.jpeg" alt="Josh Tenenbaum">
                     </div>
                     <div class="person-name">Josh Tenenbaum</div>
                     <div class="person-institute">Massachusetts Institute of Technology</div>
                 </div>
                 <div class="person-card">
                     <div class="person-photo">
-                        <img src="Levine.jpeg" alt="Sergey Levine">
+                        <img src="assets/Levine.jpeg" alt="Sergey Levine">
                     </div>
                     <div class="person-name">Sergey Levine</div>
                     <div class="person-institute">University of California, Berkeley</div>
                 </div>
                 <div class="person-card">
                     <div class="person-photo">
-                        <img src="Abbeel.png" alt="Pieter Abbeel">
+                        <img src="assets/Abbeel.png" alt="Pieter Abbeel">
                     </div>
                     <div class="person-name">Pieter Abbeel</div>
                     <div class="person-institute">University of California, Berkeley</div>
                 </div>
                 <div class="person-card">
                     <div class="person-photo">
-                        <img src="MacSchwager.jpg" alt="Mac Schwager">
+                        <img src="assets/MacSchwager.jpg" alt="Mac Schwager">
                     </div>
                     <div class="person-name">Mac Schwager</div>
                     <div class="person-institute">Stanford University</div>
                 </div>
                 <div class="person-card">
                     <div class="person-photo">
-                        <img src="torr.jpeg" alt="Philip Torr">
+                        <img src="assets/torr.jpeg" alt="Philip Torr">
                     </div>
                     <div class="person-name">Philip H.S. Torr</div>
                     <div class="person-institute">University of Oxford</div>
@@ -651,16 +682,5 @@
         </section>
     </div>
 
-    <script>
-        // Simple scroll progress bar - lightweight
-        const scrollProgress = document.getElementById('scrollProgress');
-        
-        window.addEventListener('scroll', () => {
-            const scrollTop = document.documentElement.scrollTop;
-            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const progress = (scrollTop / scrollHeight) * 100;
-            scrollProgress.style.width = progress + '%';
-        }, { passive: true });
-    </script>
 </body>
 </html>
